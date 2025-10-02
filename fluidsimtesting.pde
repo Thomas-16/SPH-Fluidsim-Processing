@@ -16,6 +16,9 @@ Entry[] spatialLookup;
 int[] startIndices;
 int maxCellKey;
 
+boolean frameBlending = true;
+int bgTransparency = 10;
+
 float particleSize = 0.017f;  // In simulation units
 float particleSpacing = 0.013f;
 int numParticles = 3200;
@@ -50,6 +53,8 @@ void setup() {
   
   // Experiemented with P2D renderer but it seems to be less efficient for some reason
   size(1280, 820);
+  
+  background(0);
   
   simWidth = 4.5f * (width/ (float) height);
   simHeight = 4.5f;
@@ -105,7 +110,14 @@ void setupParticles() {
 void draw() {
   float deltaTime = min((millis() - lastTime) / 1000.0f, 1.0f/30.0f);
   
-  background(0);
+  if(frameBlending) {
+    fill(0, bgTransparency);
+    noStroke();
+    rect(0, 0, width, height);
+  } else {
+    background(0);
+  }
+  
   
   noStroke();
   fill(#00aaf2);
